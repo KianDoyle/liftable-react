@@ -1,0 +1,20 @@
+.page-container {
+    position: sticky;
+    top: 0;
+    margin-inline: var(--component-spacing-x);
+    margin-block: var(--component-spacing-y);
+    border-radius: var(--border-radius-component);
+    background-color: var(--background-color-lighter);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    transition: background-color 0.3s;
+    padding: 5px;
+}
+
+body.dark-mode .page-container {
+    background-color: var(--background-color-dark);
+}
+
+h1 {
+    margin: 0;
+}

@@ -1,0 +1,114 @@
+/* CSS Variables for light and dark modes */
+  /* Header styles */
+  .app-header {
+    position: sticky;
+    top: 0;
+    margin-inline: var(--component-spacing-x);
+    margin-block: var(--component-spacing-y);
+    border-radius: var(--border-radius-component);
+    background-color: var(--background-color-lighter);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.3s;
+  }
+
+  body.dark-mode .app-header {
+    background-color: var(--background-color-dark);
+  }
+  
+  .logo-container {
+    display: flex;
+    padding: 5px 10px;
+  }
+
+  .logo-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .app-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  
+  .app-logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  
+  .app-title {
+    font-size: 24px;
+    height: 100%;
+    font-weight: bold;
+    color: var(--text-color-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+  }
+  
+  body.dark-mode .app-title {
+    color: var(--text-color-dark);
+  }
+  
+  .header-actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 10px;
+  }
+  
+  .search-input {
+    padding: 8px 12px;
+    font-size: 14px;
+    border: 1px solid var(--border-color-dark);
+    background-color: var(--input-background-dark);
+    border-radius: var(--border-radius-component);
+    transition: background-color 0.3s, border-color 0.3s;
+  }
+  
+  body.dark-mode .search-input {
+    background-color: var(--input-background-light);
+    border-color: var(--border-color-light);
+    color: var(--text-color-light);
+  }
+  
+  .dark-mode-toggle {
+    background: none;
+    border: none;
+    color: var(--text-color-light);
+    font-size: 18px;
+    margin-right: 20px;
+    padding: 0;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  
+  body.dark-mode .dark-mode-toggle {
+    color: var(--text-color-light);
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  @keyframes logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+  
+  @media (prefers-reduced-motion: no-preference) {
+    a:nth-of-type(2) .logo {
+      animation: logo-spin infinite 20s linear;
+    }
+  }
+  

@@ -1,0 +1,41 @@
+/* CSS Variables for light and dark modes */
+  /* Header styles */
+  .app-sidebar {
+    position: sticky;
+    top: 0;
+    margin-inline: var(--component-spacing-x);
+    margin-block: var(--component-spacing-y);
+    border-radius: var(--border-radius-component);
+    background-color: var(--background-color-lighter);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    align-items: center;
+    transition: background-color 0.3s;
+    padding: 5px;
+  }
+
+  body.dark-mode .app-sidebar {
+    background-color: var(--background-color-dark);
+  }
+
+  .sidebar-nav {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: start;
+  }
+
+  .widget-icon-spacer {
+    flex: 1;
+  }
+
+  a {
+    font-weight: 500;
+    color: #646cff;
+    text-decoration: none;
+  }
+  
+  a:hover {
+    color: #535bf2;
+  }
+
