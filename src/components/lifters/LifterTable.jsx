@@ -1,40 +1,37 @@
+// LiftersTable.jsx - Just displays data passed via props
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-const LifterTable = ({ lifters, isLoading, error }) => {
-  if (isLoading) return <div className="loading">Loading lifters...</div>;
-  if (error) return <div className="error">Error loading lifters: {error.message}</div>;
-  
+const LifterTable = ({ entities, loading, error }) => {
+  // Dynamically get table headers from the first entity
+  const getHeaders = () => {
+    if (entities.length === 0) return [];
+    return Object.keys(entities[0]);
+  };
+
+  if (loading) return <div>Loading entities...</div>;
+  if (error) return <div className="error">{error}</div>;
+  if (entities.length === 0) return <div>No entities found</div>;
+
   return (
-    <div className="lifter-table-container">
-      <table className="lifter-table">
+    <div className="entity-table-container">
+      <table className="entity-table">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Weight Class</th>
-            <th>Best Squat</th>
-            <th>Best Bench</th>
-            <th>Best Deadlift</th>
-            <th>Best Total</th>
-            <th>Wilks Score</th>
+            {getHeaders().map(header => (
+              <th key={header}>{header}</th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {lifters && lifters.content && lifters.content.map(lifter => (
-            <tr key={lifter.name}>
-              <td>
-                <Link to={`/lifters/${lifter.name}`} className="lifter-name-link">
-                  {lifter.name}
-                </Link>
-              </td>
-              <td>{lifter.age}</td>
-              <td>{lifter.weightClass}</td>
-              <td>{lifter.bestSquat} kg</td>
-              <td>{lifter.bestBench} kg</td>
-              <td>{lifter.bestDeadlift} kg</td>
-              <td>{lifter.bestTotal} kg</td>
-              <td>{lifter.wilksScore}</td>
+          {entities.map((entity, index) => (
+            <tr key={index}>
+              {getHeaders().map(header => (
+                <td key={`${index}-${header}`}>
+                  {typeof entity[header] === 'object'
+                    ? JSON.stringify(entity[header])
+                    : String(entity[header])}
+                </td>
+              ))}
             </tr>
           ))}
         </tbody>
@@ -43,4 +40,4 @@ const LifterTable = ({ lifters, isLoading, error }) => {
   );
 };
 
-export default LifterTable;
+export default LiftersTable;
