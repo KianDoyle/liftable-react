@@ -11,7 +11,7 @@ const api = axios.create({
 
 const liftersApi = {
     getLifters: async (page = 0, pageSize = 20, filters = {}) => {
-      const response = await api.get('/lifters', {
+      const response = await api.get('/api/lifters', {
         params: {
           page,
           size: pageSize,
