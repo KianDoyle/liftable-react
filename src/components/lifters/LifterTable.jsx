@@ -40,4 +40,4 @@ const LifterTable = ({ entities, loading, error }) => {
   );
 };
 
-export default LiftersTable;
+export default LifterTable;
