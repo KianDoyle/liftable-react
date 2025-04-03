@@ -6,17 +6,17 @@ const Sidebar = () => {
   return (
     <aside className="app-sidebar">
       <nav className="sidebar-nav">
-        <div class="widget-icon">
+        <div className="widget-icon">
           TRACKER
         </div>
-        <div class="widget-icon">
+        <div className="widget-icon">
           VISUALISE
         </div>
-        <div class="widget-icon">
+        <div className="widget-icon">
           PREDICT
         </div>
-        <div class="widget-icon-spacer"></div>
-        <div class="widget-icon">
+        <div className="widget-icon-spacer"></div>
+        <div className="widget-icon">
           ACCOUNT
         </div>
       </nav>

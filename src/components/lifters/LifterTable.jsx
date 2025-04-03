@@ -1,7 +1,8 @@
 // LiftersTable.jsx - Just displays data passed via props
 import React from 'react';
+import './styles/lifterTable.scss';
 
-const LifterTable = ({ entities, loading, error }) => {
+export const LifterTable = ({ entities, loading, error }) => {
   // Dynamically get table headers from the first entity
   const getHeaders = () => {
     if (entities.length === 0) return [];
@@ -40,4 +41,3 @@ const LifterTable = ({ entities, loading, error }) => {
   );
 };
 
-export default LifterTable;
