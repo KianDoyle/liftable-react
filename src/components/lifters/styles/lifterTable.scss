@@ -1,5 +1,78 @@
-table, tr, td {
-    font-size: 10px;
-    padding: 0;
-    margin: 0;
+.entity-table-container {
+    display: flex;
+    flex-direction: column;
+    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    margin-block: 10px;
+    margin-inline: auto;
+    width: 99%;
+    height: 80vh;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 12px;
+    margin: 0; /* Remove margins that could affect alignment */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
+}
+
+/* Create a separate scrollable container */
+.table-scroll-container {
+    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    flex-grow: 1; /* Take up remaining space */
+    width: auto;
+    margin-block: 15px; /* Add padding instead of table margin */
+    padding-inline: 15px;
+}
+
+th, td {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: start;
+    padding-inline: 5px; /* Add consistent padding */
+    padding-block: 5px;
+    box-sizing: border-box; /* Account for padding in width calculations */
+}
+
+/* Set default column widths */
+th:nth-child(1), td:nth-child(1) {
+    width: 13%;
+}
+
+th:nth-child(2), td:nth-child(2),
+th:nth-child(3), td:nth-child(3) {
+    width: 5%;
+}
+
+th {
+    background-color: var(--background-color-darker);
+    position: sticky;
+    top: 0;
+    user-select: none;
+    z-index: 2; /* Ensure headers are above content when scrolling */
+}
+
+tr:nth-child(2n-1) {
+    background-color: var(--background-color-dark-alt);
+}
+
+/* Column resize handle */
+.column-resize-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 4px;
+    height: 100%;
+    cursor: col-resize;
+    z-index: 3; /* Higher than header */
+}
+
+.column-resize-handle:hover,
+.column-resize-handle.active {
+    background-color: #031527;
 }

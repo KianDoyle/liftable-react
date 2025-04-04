@@ -8,13 +8,15 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     z-index: 100;
     transition: background-color 0.3s;
-    padding: 5px;
+    padding-block: 10px;
+    padding-inline: 0;
+    align-items: center;
+    height: 98%;
+    // display: flex-column;
+    // justify-content: center;
+    // align-items: center;
 }
 
 body.dark-mode .page-container {
     background-color: var(--background-color-dark);
-}
-
-h1 {
-    margin: 0;
 }

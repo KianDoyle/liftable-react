@@ -1,18 +1,20 @@
 // HomePage.jsx - Manages state and data fetching
 import React, { useState } from 'react';
 import { useLifters } from '../hooks/useLifters';
+import { Filters } from '../components/lifters/Filters';
 import { LifterTable } from '../components/lifters/LifterTable';
 import { Pagination } from '../components/lifters/Pagination';
 import './styles/homepage.scss';
 
 const HomePage = () => {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(100);
   const [filters, setFilters] = useState({
-    weightClass: '',
-    gender: '',
-    ageClass: '',
     federation: '',
+    weightClass: '',
+    ageClass: '',
+    event: 'SBD',
+    equipment: 'Raw',
   });
  
   const { data, isLoading, error } = useLifters(page, pageSize, filters);
@@ -28,33 +30,23 @@ const HomePage = () => {
   };
 
   const handleFilterChange = (e) => {
-    const { name, value } = e.target;
+    console.log(e.target);
     setFilters(prev => ({
       ...prev,
-      [name]: value
+      [e.target.id]: e.target.value
     }));
     setPage(0); // Reset to first page when filters change
   };
  
   return (
-    <div className="page-container">
-      <h1 className="page-title">Powerlifters Database</h1>
-      
+    <div className="page-container">      
       <div className="table-controls">
-        <div className="page-size-selector">
-          <label htmlFor="page-size">Items per page:</label>
-          <select
-            id="page-size"
-            value={pageSize}
-            onChange={handlePageSizeChange}
-          >
-            <option value="5">5</option>
-            <option value="10">10</option>
-            <option value="20">20</option>
-            <option value="50">50</option>
-          </select>
-        </div>
-        {/* Add filters UI here */}
+        <Filters
+          filters={filters}
+          onFilterChange={handleFilterChange}
+          pageSize={pageSize}
+          onPageSizeChange={handlePageSizeChange}
+        />
       </div>
            
       <LifterTable 
