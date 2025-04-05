@@ -10,9 +10,13 @@ export const liftersApi = {
   },
   
   // Get a specific lifter's data
-  getLifterById: (name, params) => {
+  getLifterByName: (name, params) => {
     return axios.get(`${BASE_URL}/lifter/${encodeURIComponent(name)}`, { params });
   },
+
+  getLifterNames: () => {
+    return axios.get(`${BASE_URL}/names`);
+  },  
   
   // Get a lifter's personal records/stats
   getLifterStats: (name, equipment = 'Raw') => {

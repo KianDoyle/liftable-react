@@ -3,11 +3,22 @@
     flex-direction: column;
     // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
-    margin-block: 10px;
+    // margin-block: 10px;
     margin-inline: auto;
-    width: 99%;
-    height: 80vh;
+    width: 100%;
+    height: calc(100% - 50px);
+    // flex-grow: 1;
     overflow: hidden;
+}
+
+.table-scroll-container {
+    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    overflow-y: auto;
+    // flex-grow: 1; /* Take up remaining space */
+    // width: auto;
+    height: 100%;
+    margin-block: 0;
+    // padding-inline: 15px;
 }
 
 table {
@@ -17,16 +28,6 @@ table {
     font-size: 12px;
     margin: 0; /* Remove margins that could affect alignment */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.75);
-}
-
-/* Create a separate scrollable container */
-.table-scroll-container {
-    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-    overflow-y: auto;
-    flex-grow: 1; /* Take up remaining space */
-    width: auto;
-    margin-block: 15px; /* Add padding instead of table margin */
-    padding-inline: 15px;
 }
 
 th, td {
@@ -41,12 +42,20 @@ th, td {
 
 /* Set default column widths */
 th:nth-child(1), td:nth-child(1) {
-    width: 13%;
+    width: 3%;
 }
 
-th:nth-child(2), td:nth-child(2),
-th:nth-child(3), td:nth-child(3) {
+th:nth-child(2), td:nth-child(2) {
+    width: 15%;
+}
+
+th:nth-child(3), td:nth-child(3),
+th:nth-child(4), td:nth-child(4) {
     width: 5%;
+}
+
+th:last-child, td:last-child {
+    width: 5px;
 }
 
 th {

@@ -1,11 +1,11 @@
 import { liftersApi } from "../services/liftersApi";
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react';
 
-export const useLifters = (page = 0, size = 20, filters = {}, sortBy = 'goodlift', sortDirection = 'desc') => {
+export const useLifters = (page = 0, size = 100, filters = {}, sortBy = 'goodlift', sortDirection = 'desc') => {
   const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  
+
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
@@ -28,6 +28,6 @@ export const useLifters = (page = 0, size = 20, filters = {}, sortBy = 'goodlift
     
     fetchData();
   }, [page, size, filters, sortBy, sortDirection]);
-  
+
   return { data, isLoading, error };
 };

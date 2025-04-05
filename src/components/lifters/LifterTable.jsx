@@ -1,29 +1,22 @@
-// LiftersTable.jsx - Just displays data passed via props
 import React, { useRef, useEffect } from 'react';
 import './styles/lifterTable.scss';
 
-export const LifterTable = ({ entities, loading, error }) => {
-  const headers = ["name", "sex", "age", "birthYearClass", "bodyweightKg", "weightClassKg", "best3SquatKg", "best3BenchKg", "best3DeadliftKg", "totalKg", "goodlift", "federation", "date"];
-  const headerNames = ["name", "sex", "age", "division", "weight", "class", "squat", "bench", "deadlift", "total", "glp", "fed", "date"];
-  
+export const LifterTable = ({ headers, headerNames, entities, loading, error, lastLifterRef }) => {
   const tableRef = useRef(null);
 
   useEffect(() => {
     const table = tableRef.current;
     if (!table) return;
 
-    // Add column resizing functionality
     const initResizableTable = () => {
       let isResizing = false;
       let currentColumn = null;
       let nextColumn = null;
       let startX, startWidthCurrent, startWidthNext;
 
-      // Add resize handles to each column
       const initColumns = () => {
         const headerCells = table.querySelectorAll('thead th');
         
-        // For each column except the last one
         for (let i = 0; i < headerCells.length - 1; i++) {
           const column = headerCells[i];
           const handle = document.createElement('div');
@@ -52,16 +45,13 @@ export const LifterTable = ({ entities, loading, error }) => {
         
         const diffX = e.pageX - startX;
         
-        // Calculate new widths
         const newCurrentWidth = startWidthCurrent + diffX;
         const newNextWidth = startWidthNext - diffX;
         
-        // Ensure minimum width (30px)
         if (newCurrentWidth >= 30 && newNextWidth >= 30) {
           currentColumn.style.width = `${newCurrentWidth}px`;
           nextColumn.style.width = `${newNextWidth}px`;
           
-          // Apply the same width to all cells in these columns
           const tableRows = table.querySelectorAll('tbody tr');
           tableRows.forEach(row => {
             const currentCell = row.cells[Array.from(table.querySelectorAll('thead th')).indexOf(currentColumn)];
@@ -83,25 +73,21 @@ export const LifterTable = ({ entities, loading, error }) => {
         handles.forEach(h => h.classList.remove('active'));
       };
       
-      // Initialize columns
       initColumns();
     };
 
-    // Start column resizing functionality
     initResizableTable();
     
-    // Cleanup function
     return () => {
       const handles = table.querySelectorAll('.column-resize-handle');
       handles.forEach(handle => {
-        handle.replaceWith(handle.cloneNode(true)); // Remove event listeners
+        handle.replaceWith(handle.cloneNode(true));
       });
     };
-  }, [entities]); // Reinitialize when data changes
+  }, [entities]);
 
-  if (loading) return <div>Loading entities...</div>;
-  if (error) return <div>{error}</div>;
-  if (entities.length === 0) return <div>No entities found</div>;
+  if (error) return <div className="error-message">{error}</div>;
+  if (entities.length === 0 && !loading) return <div className="no-data-message">No entities found</div>;
 
   return (
     <div className="entity-table-container">
@@ -117,17 +103,26 @@ export const LifterTable = ({ entities, loading, error }) => {
             </tr>
           </thead>
           <tbody>
-            {entities.map((entity, rowIndex) => (
-              <tr key={rowIndex}>
-                {headers.map(header => (
-                  <td key={header}>
-                    {typeof entity[header] === 'object'
-                      ? JSON.stringify(entity[header])
-                      : String(entity[header])}
-                  </td>
-                ))}
-              </tr>
-            ))}
+            {entities.map((entity, rowIndex) => {
+              const isLastRow = rowIndex === entities.length - 1;
+              const uniqueKey = `${entity.id}${entity.name}${entity.date}${entity.totalkg}${rowIndex}`;
+              return (
+                <tr 
+                  key={uniqueKey} 
+                  ref={isLastRow ? lastLifterRef : null}
+                >
+                  <td key={rowIndex + 1}>{rowIndex + 1}</td>
+                  {headers.map(header => (
+                    <td key={header}>
+                      {typeof entity[header] === 'object'
+                        ? JSON.stringify(entity[header])
+                        : String(entity[header] || '')}
+                    </td>
+                  ))}
+                  <td></td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>

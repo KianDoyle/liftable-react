@@ -3,11 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Layout from './components/common/Layout';
 import HomePage from './pages/HomePage';
-// import LifterPage from './pages/LifterPage';
-// import DashboardPage from './pages/DashboardPage';
-import { useState } from 'react';
-import reactLogo from './assets/logo.svg';
-import viteLogo from '/vite.svg';
 import './App.scss';
 
 const queryClient = new QueryClient({
