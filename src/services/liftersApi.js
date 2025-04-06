@@ -1,69 +1,71 @@
 // liftersApi.js
 import axios from 'axios';
 
-const BASE_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const BASE_URL = import.meta.env.REACT_APP_API_URL || 'http://localhost:8080';
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL || 'http://localhost:5173';
 
 export const liftersApi = {
   // Get paginated lifters with filters
   getLifters: (params) => {
-    return axios.get(`${BASE_URL}/lifters`, { params });
+    // try {
+    //   const res = await axios.get(`${VITE_BASE_URL}/static/GoodliftOrdered-${params.event}-${params.equipment}-LifterRecords.json`);
+      
+    //   const data = {
+    //     content: res.data,
+    //     pageable: {
+    //       pageNumber: 0,
+    //       pageSize: res.data.length,
+    //       sort: {
+    //         empty: true,
+    //         sorted: false,
+    //         unsorted: true
+    //       }
+    //     },
+    //     totalElements: res.data.length,
+    //     totalPages: 1,
+    //     last: true,
+    //     size: res.data.length,
+    //     number: 0,
+    //     numberOfElements: res.data.length,
+    //     first: true,
+    //     empty: false
+    //   };      
+  
+    //   if (data.content) {
+    //     console.log("CDN data loaded:", data);
+    //     return data;
+    //   }
+    // } catch (e) {
+    //   console.warn("CDN not found; falling back to API:", e);
+    // }
+  
+    // Fallback to live API if CDN fails
+    return axios.get(`${BASE_URL}/api/lifters`, { params });
   },
   
   // Get a specific lifter's data
   getLifterByName: (name, params) => {
-    return axios.get(`${BASE_URL}/lifter/${encodeURIComponent(name)}`, { params });
+    return axios.get(`${BASE_URL}/api/lifter/${name}`, { params });
   },
 
   getLifterNames: () => {
-    return axios.get(`${BASE_URL}/names`);
+    return axios.get(`${BASE_URL}/api/names`);
   },  
   
   // Get a lifter's personal records/stats
   getLifterStats: (name, equipment = 'Raw') => {
-    return axios.get(`${BASE_URL}/lifter/${encodeURIComponent(name)}/stats`, { 
+    return axios.get(`${BASE_URL}/api/lifter/${name}/stats`, { 
       params: { equipment } 
     });
   },
   
   // Get top lifters
   getTopLifters: () => {
-    return axios.get(`${BASE_URL}/lifters/top`);
+    return axios.get(`${BASE_URL}/api/lifters/top`);
   },
   
   // Get filter options for dropdowns
   getFilterOptions: () => {
-    return axios.get(`${BASE_URL}/filters`);
+    return axios.get(`${BASE_URL}/api/filters`);
   }
-};
-
-// Example usage in a hook
-export const useLifters = (page = 0, size = 20, filters = {}, sortBy = 'goodlift', sortDirection = 'desc') => {
-  const [data, setData] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
-  
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      try {
-        const response = await liftersApi.getLifters({
-          page,
-          size,
-          sortBy,
-          direction: sortDirection,
-          ...filters
-        });
-        setData(response.data);
-        setError(null);
-      } catch (err) {
-        setError(err.message || 'Failed to fetch lifters');
-      } finally {
-        setIsLoading(false);
-      }
-    };
-    
-    fetchData();
-  }, [page, size, filters, sortBy, sortDirection]);
-  
-  return { data, isLoading, error };
 };

@@ -1,7 +1,7 @@
 import { liftersApi } from "../services/liftersApi";
 import { useState, useEffect } from "react";
 
-export const useLifterRecords = (name = '', filters = {}, sortBy = 'date', sortDirection = 'desc') => {
+export const useLifterRecords = (name = '', page = 0, size = 100, filters = {}, sortBy = 'date', sortDirection = 'desc') => {
     const [data, setData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -10,8 +10,9 @@ export const useLifterRecords = (name = '', filters = {}, sortBy = 'date', sortD
         const fetchData = async () => {
             setIsLoading(true);
             try {
-                const response = await liftersApi.getLifterByName({
-                    name: name,
+                const response = await liftersApi.getLifterByName(name, {
+                    page, 
+                    size,
                     sortBy,
                     direction: sortDirection,
                     ...filters
@@ -25,7 +26,7 @@ export const useLifterRecords = (name = '', filters = {}, sortBy = 'date', sortD
             }
         };
         fetchData();
-    }, [name, filters, sortBy, sortDirection]);
+    }, [name, page, size, filters, sortBy, sortDirection]);
 
     return { data, isLoading, error };
 };

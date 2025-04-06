@@ -96,7 +96,7 @@ export const LifterTable = ({ headers, headerNames, entities, loading, error, la
           <thead>
             <tr>
               {headerNames.map((headerName, index) => (
-                <th key={headers[index]}>
+                <th key={index}>
                   {headerName.toUpperCase()}
                 </th>
               ))}
@@ -105,15 +105,14 @@ export const LifterTable = ({ headers, headerNames, entities, loading, error, la
           <tbody>
             {entities.map((entity, rowIndex) => {
               const isLastRow = rowIndex === entities.length - 1;
-              const uniqueKey = `${entity.id}${entity.name}${entity.date}${entity.totalkg}${rowIndex}`;
               return (
                 <tr 
-                  key={uniqueKey} 
+                  key={`${entity.id}-${rowIndex}`}
                   ref={isLastRow ? lastLifterRef : null}
                 >
                   <td key={rowIndex + 1}>{rowIndex + 1}</td>
                   {headers.map(header => (
-                    <td key={header}>
+                    <td key={header + rowIndex}>
                       {typeof entity[header] === 'object'
                         ? JSON.stringify(entity[header])
                         : String(entity[header] || '')}

@@ -3,7 +3,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Layout from './components/common/Layout';
 import HomePage from './pages/HomePage';
-import './App.scss';
+import LifterPage from './pages/LifterPage';
+import './styles/app.scss';
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +23,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<HomePage />} />
-            {/* <Route path="lifters/:name" element={<LifterPage />} /> */}
+            <Route path="/lifter/:lifter" element={<LifterPage />} />
             {/* <Route path="dashboard" element={<DashboardPage />} /> */}
           </Route>
         </Routes>

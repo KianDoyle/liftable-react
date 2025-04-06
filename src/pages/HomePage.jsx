@@ -6,7 +6,7 @@ import './styles/homepage.scss';
 
 const HomePage = () => {
   const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(50);
   const [allLifters, setAllLifters] = useState([]);
   const [hasMore, setHasMore] = useState(true);
   const [filters, setFilters] = useState({
@@ -16,11 +16,12 @@ const HomePage = () => {
     event: 'SBD',
     equipment: 'Raw',
   });
+
   const headers = ["name", "sex", "age", "birthYearClass", "bodyweightKg", "weightClassKg", "best3SquatKg", "best3BenchKg", "best3DeadliftKg", "totalKg", "goodlift", "federation", "date"];
   const headerNames = ["", "name", "sex", "age", "division", "weight", "class", "squat", "bench", "deadlift", "total", "glp", "fed", "date", ""];
- 
+
   const { data, isLoading, error } = useLifters(page, pageSize, filters);
-  
+
   const observer = useRef();
   const lastLifterElementRef = useCallback(node => {
     if (isLoading) return;
@@ -55,14 +56,14 @@ const HomePage = () => {
   }, [data, page]);
 
   return (
-    <div className="page-container">      
+    <div className="page-container">
       <div className="table-controls">
         <Filters
           filters={filters}
           onFilterChange={handleFilterChange}
         />
       </div>
-           
+
       <LifterTable
         headers={headers}
         headerNames={headerNames}

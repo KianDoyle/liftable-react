@@ -4,7 +4,6 @@ import { debounce } from "lodash";
 import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../utils/utils.js";
 import { useSearchLifters } from "../../hooks/useSearchLifters";
-import logo from "../../assets/logo.svg";
 import "./styles/header.scss";
 
 const Header = () => {
@@ -13,7 +12,6 @@ const Header = () => {
   const [filteredLifters, setFilteredLifters] = useState([]);
   const [fuse, setFuse] = useState(null);
 
-  // Initialize Fuse.js when lifters are loaded
   useEffect(() => {
     if (lifters.length > 0) {
       setFuse(new Fuse(lifters, { keys: ["name"], threshold: 0.5, includeScore: true })); // Fuzzy search setup
@@ -34,7 +32,7 @@ const Header = () => {
       <div className="header-content">
         <div className="logo-container">
           <Link to="/" className="logo-link">
-            <img src={logo} alt="Powerlifting App Logo" className="app-logo" />
+            <img src="/logo.svg" alt="Powerlifting App Logo" className="app-logo" />
             <span className="app-title">LIFTABLE</span>
           </Link>
         </div>
@@ -57,7 +55,11 @@ const Header = () => {
               <ul className="dropdown">
                 {filteredLifters.map((lifter) => (
                   <li key={lifter} className="dropdown-item">
-                    <Link to={`/lifter/${lifter}`} className="dropdown-link">
+                    <Link to={{
+                        pathname: `/lifter/${lifter}`,
+                        }} 
+                        state={lifter}
+                        className="dropdown-link">
                       {lifter}
                     </Link>
                   </li>
