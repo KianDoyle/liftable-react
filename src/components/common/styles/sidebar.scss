@@ -42,3 +42,43 @@
     color: #535bf2;
   }
 
+  .logo-container {
+    display: flex;
+    padding: 5px 10px;
+  }
+
+  .widget-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .widget-img {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    will-change: filter;
+    transition: filter 300ms;
+  }
+  
+  .widget-logo:hover {
+    filter: drop-shadow(0 0 2em #646cffaa);
+  }
+  
+  .widget-title {
+    font-size: 14px;
+    height: 100%;
+    font-weight: bold;
+    color: var(--text-color-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: color 0.3s;
+  }
+
+  body.dark-mode .widget-title {
+    color: var(--text-color-dark);
+  }
+
+  a {
+    text-decoration: none;
+  }

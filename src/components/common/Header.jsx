@@ -4,6 +4,7 @@ import { debounce } from "lodash";
 import { Link } from "react-router-dom";
 import { toggleDarkMode } from "../../utils/utils.js";
 import { useSearchLifters } from "../../hooks/useSearchLifters";
+import { hideSearchResults } from "../../utils/utils.js";
 import "./styles/header.scss";
 
 const Header = () => {
@@ -59,7 +60,8 @@ const Header = () => {
                         pathname: `/lifter/${lifter}`,
                         }} 
                         state={lifter}
-                        className="dropdown-link">
+                        className="dropdown-link"
+                        onClick={hideSearchResults}>
                       {lifter}
                     </Link>
                   </li>
