@@ -1,0 +1,27 @@
+.page-container {
+    position: sticky;
+    top: 0;
+    border-radius: var(--border-radius-component);
+    background-color: var(--background-color-lighter);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    transition: background-color 0.3s;
+    align-items: center;
+    height: 100%;
+}
+
+.table-controls {
+    display: flex;
+    height: 50px;
+    font-size: 1.25vw;
+    width: 100%;
+    padding: 10px;
+}
+
+body.dark-mode .page-container {
+    background-color: var(--background-color-dark);
+}
+
+.table-scroll-container {
+    height: 40%;
+}

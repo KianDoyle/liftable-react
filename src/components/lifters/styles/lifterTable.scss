@@ -12,13 +12,9 @@
 }
 
 .table-scroll-container {
-    // box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
     overflow-y: auto;
-    // flex-grow: 1; /* Take up remaining space */
-    // width: auto;
     height: 100%;
     margin-block: 0;
-    // padding-inline: 15px;
 }
 
 table {
