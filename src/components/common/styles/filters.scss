@@ -1,0 +1,14 @@
+.filters {
+    width: 80%;
+    display: flex;
+    justify-content: start;
+    font-size: 1.25vw;
+}
+
+.filters select {
+    margin-left: 10px;
+}
+
+.filters select:first-of-type {
+    margin-left: 15px;
+}

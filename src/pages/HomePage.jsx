@@ -1,119 +1,77 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useLifters } from '../hooks/useLifters';
-import LifterTable from '../components/lifters/LifterTable';
-import Pagination from '../components/lifters/Pagination';
+import { Filters } from '../components/common/Filters';
+import { LifterTable } from '../components/lifters/LifterTable';
 import './styles/homepage.scss';
 
 const HomePage = () => {
   const [page, setPage] = useState(0);
-  const [pageSize] = useState(20);
+  const [pageSize, setPageSize] = useState(50);
+  const [allLifters, setAllLifters] = useState([]);
+  const [hasMore, setHasMore] = useState(true);
   const [filters, setFilters] = useState({
-    weightClass: '',
-    gender: '',
-    ageClass: '',
     federation: '',
+    weightClass: '',
+    ageClass: '',
+    event: 'SBD',
+    equipment: 'Raw',
   });
-  
+
+  const headers = ["name", "sex", "age", "birthYearClass", "bodyweightKg", "weightClassKg", "best3SquatKg", "best3BenchKg", "best3DeadliftKg", "totalKg", "goodlift", "federation", "date"];
+  const headerNames = ["", "name", "sex", "age", "division", "weight", "class", "squat", "bench", "deadlift", "total", "glp", "fed", "date", ""];
+
   const { data, isLoading, error } = useLifters(page, pageSize, filters);
-  
-  const handlePageChange = (newPage) => {
-    setPage(newPage);
-    window.scrollTo(0, 0);
-  };
-  
+
+  const observer = useRef();
+  const lastLifterElementRef = useCallback(node => {
+    if (isLoading) return;
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPage => prevPage + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
+  }, [isLoading, hasMore]);
+
   const handleFilterChange = (e) => {
-    const { name, value } = e.target;
     setFilters(prev => ({
       ...prev,
-      [name]: value
+      [e.target.id]: e.target.value,
     }));
-    setPage(0); // Reset to first page when filters change
+    setPage(0);
+    setAllLifters([]);
+    setHasMore(true);
   };
-  
+
+  useEffect(() => {
+    if (data) {
+      if (page === 0) {
+        setAllLifters(data.content);
+      } else {
+        setAllLifters(prev => [...prev, ...data.content]);
+      }
+      setHasMore(!data.last);
+    }
+  }, [data, page]);
+
   return (
     <div className="page-container">
-      <h1 className="page-title">Powerlifters Database</h1>
-      
-      <div className="filters-section">
-        <div className="filter-group">
-          <label htmlFor="weightClass">Weight Class</label>
-          <select 
-            id="weightClass" 
-            name="weightClass" 
-            value={filters.weightClass}
-            onChange={handleFilterChange}
-          >
-            <option value="">All Weight Classes</option>
-            <option value="59">59kg</option>
-            <option value="66">66kg</option>
-            <option value="74">74kg</option>
-            <option value="83">83kg</option>
-            <option value="93">93kg</option>
-            <option value="105">105kg</option>
-            <option value="120">120kg</option>
-            <option value="120+">120kg+</option>
-          </select>
-        </div>
-        
-        <div className="filter-group">
-          <label htmlFor="gender">Gender</label>
-          <select 
-            id="gender" 
-            name="gender" 
-            value={filters.gender}
-            onChange={handleFilterChange}
-          >
-            <option value="">All</option>
-            <option value="M">Male</option>
-            <option value="F">Female</option>
-          </select>
-        </div>
-        
-        <div className="filter-group">
-          <label htmlFor="ageClass">Age Class</label>
-          <select 
-            id="ageClass" 
-            name="ageClass" 
-            value={filters.ageClass}
-            onChange={handleFilterChange}
-          >
-            <option value="">All</option>
-            <option value="junior">Junior</option>
-            <option value="open">Open</option>
-            <option value="master">Master</option>
-          </select>
-        </div>
-        
-        <div className="filter-group">
-          <label htmlFor="federation">Federation</label>
-          <select 
-            id="federation" 
-            name="federation" 
-            value={filters.federation}
-            onChange={handleFilterChange}
-          >
-            <option value="">All</option>
-            <option value="IPF">IPF</option>
-            <option value="USAPL">USAPL</option>
-            <option value="USPA">USPA</option>
-            <option value="WRPF">WRPF</option>
-          </select>
-        </div>
-      </div>
-      
-      <LifterTable 
-        lifters={data} 
-        isLoading={isLoading}
-        error={error}
-      />
-      
-      {!isLoading && !error && data && (
-        <Pagination 
-          currentPage={page}
-          totalPages={data.totalPages || 1}
-          onPageChange={handlePageChange}
+      <div className="table-controls">
+        <Filters
+          filters={filters}
+          onFilterChange={handleFilterChange}
         />
-      )}
+      </div>
+
+      <LifterTable
+        headers={headers}
+        headerNames={headerNames}
+        entities={allLifters}
+        loading={isLoading}
+        error={error}
+        lastLifterRef={lastLifterElementRef}
+      />
     </div>
   );
 };

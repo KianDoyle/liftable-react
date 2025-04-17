@@ -1,6 +1,7 @@
 import React from 'react';
+import './styles/pagination.scss';
 
-const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+export const Pagination = ({ currentPage, totalPages, onPageChange }) => {
   // Generate page numbers to display
   const getPageNumbers = () => {
     const pageNumbers = [];
@@ -75,5 +76,3 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
     </div>
   );
 };
-
-export default Pagination;
