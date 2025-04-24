@@ -71,6 +71,7 @@ const HomePage = () => {
         loading={isLoading}
         error={error}
         lastLifterRef={lastLifterElementRef}
+        tableHeight="100%"
       />
     </div>
   );

@@ -77,10 +77,12 @@ body.dark-mode {
 .content-container {
   display: flex;
   height: calc(100% - 50px);
+  width: 100%;
 }
 
 .main-content {
   height: 100%;
+  width: calc(100% - 7.5vh - 40px);
   padding-block-start: var(--component-spacing-y-s);
   padding-block-end: var(--component-spacing-y-e);
   padding-inline-end: var(--component-spacing-x-e);

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import './styles/lifterTable.scss';
 
-export const LifterTable = ({ headers, headerNames, entities, loading, error, lastLifterRef }) => {
+export const LifterTable = ({ headers, headerNames, entities, loading, error, lastLifterRef, tableHeight = "100%" }) => {
   const tableRef = useRef(null);
 
   useEffect(() => {
@@ -90,7 +90,7 @@ export const LifterTable = ({ headers, headerNames, entities, loading, error, la
   if (entities.length === 0 && !loading) return <div className="no-data-message">No entities found</div>;
 
   return (
-    <div className="entity-table-container">
+    <div className="entity-table-container" style={{ height: tableHeight }}>
       <div className="table-scroll-container">
         <table ref={tableRef}>
           <thead>

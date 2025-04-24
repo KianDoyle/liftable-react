@@ -38,9 +38,9 @@ const Header = () => {
           </Link>
         </div>
         <div className="header-actions">
-          <button className="dark-mode-toggle" onClick={toggleDarkMode}>
+          {/* <button className="dark-mode-toggle" onClick={toggleDarkMode}>
             🌙
-          </button>
+          </button> */}
           <div className="search-container">
             <input
               type="text"

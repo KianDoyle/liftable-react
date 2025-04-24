@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useCallback } from "react";
-import { useLocation } from "react-router-dom";
 import { useLifterRecords } from "../hooks/useLifterRecords";
 import { Filters } from "../components/common/Filters";
 import { LifterTable } from "../components/lifters/LifterTable";
+import { Charts } from "../components/charts/Charts";
 import './styles/lifterpage.scss';
 
 const LifterPage = () => {
@@ -73,6 +73,12 @@ const LifterPage = () => {
                 loading={isLoading}
                 error={error}
                 lastLifterRef={lastLifterElementRef}
+                tableHeight="40%"
+            />
+            <Charts
+                entities={lifterRecords.reverse()}
+                loading={isLoading}
+                error={error}
             />
         </div>
     );

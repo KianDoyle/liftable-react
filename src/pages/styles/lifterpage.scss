@@ -8,6 +8,7 @@
     transition: background-color 0.3s;
     align-items: center;
     height: 100%;
+    width: 100%;
 }
 
 .table-controls {
@@ -20,8 +21,4 @@
 
 body.dark-mode .page-container {
     background-color: var(--background-color-dark);
-}
-
-.table-scroll-container {
-    height: 40%;
 }

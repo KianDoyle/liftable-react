@@ -54,9 +54,8 @@
   }
   
   .widget-img {
-    width: 40px;
-    height: 40px;
-    margin-right: 10px;
+    width: 7.5vh;
+    // margin-right: 10px;
     will-change: filter;
     transition: filter 300ms;
   }
@@ -66,6 +65,7 @@
   }
   
   .widget-title {
+    display: none;
     font-size: 14px;
     height: 100%;
     font-weight: bold;
